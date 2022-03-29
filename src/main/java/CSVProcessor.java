@@ -1,4 +1,3 @@
-import com.github.promeg.pinyinhelper.Pinyin;
 import de.siegmar.fastcsv.reader.CsvReader;
 import de.siegmar.fastcsv.reader.CsvRow;
 
@@ -30,7 +29,7 @@ public class CSVProcessor implements Callable<Set<String>> {
             for (final CsvRow csvRow : CsvReader.builder().build(Path.of(file.getAbsolutePath()))) {
                 if (csvRow.getOriginalLineNumber() != 1) {
                     String csvColumnData = csvRow.getField(data.columnIndex);
-                    if (csvColumnData != null && csvColumnData.length() > 0 && PinyinUtil.hasChineseChar(csvColumnData)) {
+                    if (PinyinUtil.isChinese(csvColumnData) && csvColumnData.length() > 2) {
                         csvData.add(csvColumnData);
                     }
                 }
